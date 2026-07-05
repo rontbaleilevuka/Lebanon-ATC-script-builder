@@ -143,6 +143,34 @@
 </style>
 </head>
 <body>
+<datalist id="lb-airports">
+          <option value="OLBA">OLBA — Beirut–Rafic Hariri International</option>
+          <option value="OMDB">OMDB — Dubai International</option>
+          <option value="HECA">HECA — Cairo International</option>
+          <option value="LTFM">LTFM — Istanbul International</option>
+          <option value="LTFJ">LTFJ — Istanbul Sabiha Gökçen</option>
+          <option value="LFPG">LFPG — Paris Charles de Gaulle</option>
+          <option value="OJAI">OJAI — Amman Queen Alia International</option>
+          <option value="OTHH">OTHH — Doha Hamad International</option>
+          <option value="OERK">OERK — Riyadh King Khalid International</option>
+          <option value="OEJN">OEJN — Jeddah King Abdulaziz International</option>
+          <option value="OEDF">OEDF — Dammam King Fahd International</option>
+          <option value="OKKK">OKKK — Kuwait International</option>
+          <option value="OMAA">OMAA — Abu Dhabi Zayed International</option>
+          <option value="OMSJ">OMSJ — Sharjah International</option>
+          <option value="LGAV">LGAV — Athens International</option>
+          <option value="LCLK">LCLK — Larnaca International</option>
+          <option value="LIRF">LIRF — Rome Fiumicino</option>
+          <option value="EDDF">EDDF — Frankfurt Airport</option>
+          <option value="LSGG">LSGG — Geneva Airport</option>
+          <option value="EGLL">EGLL — London Heathrow</option>
+          <option value="ORBI">ORBI — Baghdad International</option>
+          <option value="ORER">ORER — Erbil International</option>
+          <option value="ORNI">ORNI — Najaf International</option>
+          <option value="UDYZ">UDYZ — Yerevan Zvartnots International</option>
+          <option value="HAAB">HAAB — Addis Ababa Bole International</option>
+          <option value="DAAG">DAAG — Algiers Houari Boumediene</option>
+        </datalist>
 <div class="app">
 
   <!-- MASTHEAD -->
@@ -203,7 +231,7 @@
       <div class="section-body">
         <div class="row-4">
           <div class="field"><span class="field-label">Station</span>
-            <input id="w_station" placeholder="e.g. OLBA">
+            <input id="w_station" placeholder="e.g. OLBA" list="lb-airports">
           </div>
           <div class="field"><span class="field-label">Obs Time</span><input id="w_obstime" placeholder="e.g. 2000"></div>
           <div class="field">
@@ -251,7 +279,7 @@
         <!-- ROW 2: Callsign + Route side by side -->
         <div class="row-2">
           <div class="field"><span class="field-label">Callsign</span><input id="f_callsign" placeholder="e.g. ANZ801L or ZK-ZAQ"></div>
-          <div class="field"><span class="field-label">Route / FL / Description &nbsp;<span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0">— press Enter for a new line</span></span><textarea id="f_route" rows="3" placeholder="e.g. TGCH3 TODAN3P GOBUK Trans"></textarea></div>
+          <div class="field" id="routeFieldWrap"><span class="field-label">Route / FL / Description &nbsp;<span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0">— press Enter for a new line</span></span><textarea id="f_route" rows="3" placeholder="e.g. TGCH3 TODAN3P GOBUK Trans"></textarea></div>
         </div>
 
         <!-- ROW 3: Aircraft Type + Transponder + Flight Level -->
@@ -263,6 +291,21 @@
           <div class="field">
             <span class="field-label">Transponder</span>
             <input id="f_transponder" placeholder="e.g. 5142" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
+          </div>
+        </div>
+
+        <!-- Vehicle Type (Ground entries only) -->
+        <div id="vehicleTypeRow" style="display:none;margin-bottom:10px">
+          <div class="field">
+            <span class="field-label">Vehicle Type</span>
+            <select id="f_vehicle_type">
+              <option value="">— Select —</option>
+              <option value="Crane">Crane</option>
+              <option value="Ute">Ute</option>
+              <option value="Tug">Tug</option>
+              <option value="Fire Truck">Fire Truck</option>
+              <option value="Fire Ute">Fire Ute</option>
+            </select>
           </div>
         </div>
 
@@ -322,25 +365,16 @@
         <!-- VFR DEP TIMES -->
         <div id="vfrTimesRow" style="display:none">
           <div class="ifr-times-box" style="border-color:#8DB3E2">
-            <div class="ifr-times-title" style="color:#6a9fd4">⚡ VFR Departure — Three Calls</div>
+            <div class="ifr-times-title" style="color:#6a9fd4;display:none"></div>
             <div class="ifr-times-grid">
               <div class="ifr-time-item">
-                <span class="ifr-time-label">① Initial Call Time</span>
+                <span class="ifr-time-label">Initial Call Time</span>
                 <input id="f_vfr_time_initial" placeholder="e.g. 2003" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
                 <input id="f_vfr_sn1" placeholder="sim notes..." style="margin-top:4px;font-size:11px;opacity:0.85;border-color:#cc0000;color:#cc0000">
-              </div>
-              <div class="ifr-time-item">
-                <span class="ifr-time-label">② Request Taxi Time</span>
-                <input id="f_vfr_time_taxi" placeholder="e.g. 2004" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
-                <input id="f_vfr_sn2" placeholder="sim notes..." style="margin-top:4px;font-size:11px;opacity:0.85;border-color:#cc0000;color:#cc0000">
               </div>
             </div>
           </div>
           <div class="row-2" style="margin-bottom:10px">
-          </div>
-          <div class="field" style="margin-bottom:10px">
-            <span class="field-label">Ready Speech</span>
-            <textarea id="f_vfr_ready_instr" rows="2" placeholder='"Ready" — leave blank to use default'></textarea>
           </div>
         </div>
 
@@ -775,7 +809,7 @@ window.onload = function() {
     const needsTime = i !== 0; // Origin doesn't need a time
     wpGrid.innerHTML += `<div class="wp-pair">
       ${isAirport
-        ? `<input class="wp-name" id="wp_label_${i}" placeholder="${ph}">`
+        ? `<input class="wp-name" id="wp_label_${i}" placeholder="${ph}" list="lb-airports">`
         : `<input class="wp-name" id="wp_label_${i}" placeholder="${ph}">`
       }
       ${needsTime ? `<span class="wp-sep">:</span><input class="wp-time" id="wp_time_${i}" placeholder="time">` : `<input type="hidden" id="wp_time_${i}" value="">`}
@@ -824,7 +858,7 @@ function getNavOrder() {
   if (isIFR) {
     base.push('f_time_initial','f_ifr_sn1','f_time_start','f_ifr_sn2','f_time_taxi','f_ifr_sn3');
   } else if (isVFR) {
-    base.push('f_vfr_time_initial','f_vfr_sn1','f_vfr_time_taxi','f_vfr_sn2');
+    base.push('f_vfr_time_initial','f_vfr_sn1');
   } else {
     base.push('f_time','f_freq');
   }
@@ -836,7 +870,6 @@ function getNavOrder() {
   base.push('f_instructions');
 
   if (isIFR) base.push('f_taxi_instr');
-  if (isVFR) base.push('f_vfr_ready_instr');
 
   if (!isSpecial && !isIFR && !isVFR) base.push('f_simnotes');
 
@@ -917,9 +950,13 @@ function updateEntryType() {
   document.getElementById('ifrTaxiInstrRow').style.display = isIFRDep  ? 'block' : 'none';
   document.getElementById('vfrTimesRow').style.display     = isVFRDep  ? 'block' : 'none';
 
-  // Show/hide flight fields
-  document.getElementById('flightFields').style.display  = isSpecial ? 'none' : 'block';
-  document.getElementById('simNotesField').style.display = (isSpecial || isIFRDep || isVFRDep) ? 'none' : 'block';
+  // Show/hide flight fields and vehicle type
+  document.getElementById('flightDetailsRow').style.display = isSpecial ? 'none' : 'block';
+  document.getElementById('vehicleTypeRow').style.display   = (type === 'ground') ? 'block' : 'none';
+  document.getElementById('flightFields').style.display     = isSpecial ? 'none' : 'block';
+  document.getElementById('simNotesField').style.display    = (isSpecial || isIFRDep || isVFRDep) ? 'none' : 'block';
+  const routeWrap = document.getElementById('routeFieldWrap');
+  if (routeWrap) routeWrap.style.display = (type === 'ground') ? 'none' : 'block';
 
   // Labels
   document.getElementById('instrLabel').textContent = isSpecial ? 'Instruction / Note'
@@ -942,16 +979,16 @@ function toggleEntryForm() {
 // ─── ADD ENTRY ────────────────────────────────────────────────────────────────
 function addEntry() {
   const type      = document.getElementById('f_type').value;
-  // Read separate fields
-  const callsignRaw = document.getElementById('f_callsign').value.trim();
-  const callsign     = callsignRaw;
-  const actype       = document.getElementById('f_actype').value.trim();
-  const transponder  = document.getElementById('f_transponder').value.trim();
-  // Combine into aircraftType for storage/rendering
-  const aircraftType = [actype, transponder].filter(Boolean).join('\n');
   const isSpecial = type === 'coord' || type === 'ground';
   const isIFRDep  = type === 'ifr_dep';
   const isVFRDep  = type === 'vfr_dep';
+  // Read separate fields
+  const callsignRaw = document.getElementById('f_callsign').value.trim();
+  const callsign     = callsignRaw;
+  const actype       = isSpecial ? '' : getAcType();
+  const vehicleType  = document.getElementById('f_vehicle_type') ? document.getElementById('f_vehicle_type').value.trim() : '';
+  const transponder  = isSpecial ? '' : document.getElementById('f_transponder').value.trim();
+  const aircraftType = isSpecial ? vehicleType : [actype, transponder].filter(Boolean).join('\n');
 
   if (!callsign) { alert('Please enter a Callsign.'); return; }
 
@@ -1029,16 +1066,10 @@ function addEntry() {
   } else if (isVFRDep) {
     const freq  = document.getElementById('f_freq').value.trim();
     const t1    = document.getElementById('f_vfr_time_initial').value.trim();
-    const t2    = document.getElementById('f_vfr_time_taxi').value.trim();
-    const readySpeech = document.getElementById('f_vfr_ready_instr').value.trim() || '"Ready"';
-    const taxiSpeech  = '"Request Taxi"';
-    const sn1 = document.getElementById('f_vfr_sn1').value.trim();
-    const sn2 = document.getElementById('f_vfr_sn2').value.trim();
-    // Validate at least one time is entered
-    if (!t1 && !t2) { alert('Please enter at least one time.'); return; }
+    const sn1   = document.getElementById('f_vfr_sn1').value.trim();
+    if (!t1) { alert('Please enter a Time.'); return; }
     const base = { callsign, entryType: type, aircraftType, route, waypoints, freq };
-    if (t1) insertSorted({ ...base, time: t1, instructions, simNotes: sn1 });
-    if (t2) insertSorted({ ...base, time: t2, instructions: taxiSpeech, simNotes: sn2 });
+    insertSorted({ ...base, time: t1, instructions, simNotes: sn1 });
 
   } else {
     const freq = document.getElementById('f_freq').value.trim();
@@ -1448,7 +1479,7 @@ function buildScriptHTML() {
       html += `
       <tr>
         <td style="border:1px solid #999;padding:3px 5px;background:${cssBg};text-align:center !important;vertical-align:middle !important"><b>${e.time}</b></td>
-        <td style="border:1px solid #999;padding:3px 5px;background:${cssBg}"><b>${e.callsign}</b></td>
+        <td style="border:1px solid #999;padding:3px 5px;background:${cssBg};text-align:center;vertical-align:middle"><b>${e.callsign}</b>${e.entryType==='ground'&&e.aircraftType?`<br><span style="font-size:8.5pt;font-weight:normal">${e.aircraftType}</span>`:''}</td>
         <td style="border:1px solid #999;padding:3px 5px;background:${cssBg}"><b>${col.label}</b></td>
         <td colspan="5" style="border:1px solid #999;border-bottom:2.5px solid #555;padding:3px 5px;background:${cssBg}"><em>${rawInstr}</em></td>
       </tr>`;
