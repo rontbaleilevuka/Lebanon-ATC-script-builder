@@ -1080,7 +1080,7 @@ function addEntry() {
 
   // Clear form fields
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
-   'f_vfr_time_initial','f_vfr_time_taxi','f_vfr_ready_instr',
+   'f_vfr_time_initial',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
    'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
@@ -1272,7 +1272,6 @@ function editEntry(i) {
           sv('f_vfr_time_initial', row.time); sv('f_vfr_sn1', row.simNotes);
           sv('f_instructions', instr);
         } else if (instr === '"Request Taxi"') {
-          sv('f_vfr_time_taxi', row.time); sv('f_vfr_sn2', row.simNotes);
         }
       });
     }
@@ -1323,7 +1322,7 @@ function cancelEdit() {
   document.getElementById('cancelEditBtn').style.display = 'none';
   // Clear form
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
-   'f_vfr_time_initial','f_vfr_time_taxi','f_vfr_ready_instr',
+   'f_vfr_time_initial',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
    'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
