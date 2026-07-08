@@ -3,24 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIM Script Builder — Lebanon ATC</title>
+<title>SIM Script Builder — NZ Airways</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,400;0,600;1,400&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #0a0e1a; --panel: #111827; --border: #1e2d4a;
-    --text: #e2e8f0; --muted: #64748b; --accent: #c9a84c;
+    --bg: #0d0f14; --panel: #13161e; --border: #252a36;
+    --text: #d4dae8; --muted: #5a6278; --accent: #00c9ff;
     --mono: 'Share Tech Mono', monospace;
     --sans: 'Barlow Condensed', sans-serif;
     --body: 'Barlow', sans-serif;
   }
-  body { background: var(--bg); color: var(--text); font-family: var(--body); min-height: 100vh;
-    background-image: linear-gradient(180deg, #0a0e1a 0%, #060810 100%); }
+  body { background: var(--bg); color: var(--text); font-family: var(--body); min-height: 100vh; }
   .app { max-width: 1040px; margin: 0 auto; padding: 0 16px 60px; }
 
   /* MASTHEAD */
   .masthead { display: flex; align-items: flex-end; justify-content: space-between;
-    padding: 20px 0 14px; border-bottom: 2px solid #c9a84c; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+    padding: 20px 0 14px; border-bottom: 1px solid var(--border); margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
   .masthead h1 { font-family: var(--sans); font-weight: 900; font-size: 28px;
     letter-spacing: 3px; text-transform: uppercase; color: var(--accent); line-height: 1; }
   .masthead p { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 1px; }
@@ -30,8 +29,8 @@
   .btn { font-family: var(--sans); font-weight: 700; font-size: 12px; letter-spacing: 1.5px;
     text-transform: uppercase; padding: 8px 16px; border: 1px solid; cursor: pointer;
     transition: all 0.15s; background: transparent; }
-  .btn-accent  { border-color: #c9a84c; color: #c9a84c; }
-  .btn-accent:hover, .btn-accent.active { background: #c9a84c; color: #000; }
+  .btn-accent  { border-color: var(--accent); color: var(--accent); }
+  .btn-accent:hover, .btn-accent.active { background: var(--accent); color: #000; }
   .btn-green   { border-color: #4caf50; color: #4caf50; }
   .btn-green:hover { background: #4caf50; color: #000; }
   .btn-orange  { border-color: #ff9800; color: #ff9800; }
@@ -46,7 +45,7 @@
   .tabs { display: flex; gap: 5px; }
 
   /* LEGEND */
-  .legend { background: #111827; border: 1px solid #1e2d4a; margin-bottom: 14px; }
+  .legend { background: var(--panel); border: 1px solid var(--border); margin-bottom: 14px; }
   .legend-title { font-family: var(--sans); font-weight: 700; font-size: 11px; letter-spacing: 2px;
     text-transform: uppercase; color: var(--muted); padding: 8px 14px;
     background: #0f1118; border-bottom: 1px solid var(--border); }
@@ -141,61 +140,22 @@
     .row-3 { grid-template-columns: 1fr 1fr; }
     .ifr-times-grid { grid-template-columns: 1fr; }
   }
-  /* Desert gold theme */
-  .masthead { border-top: 4px solid #c9a84c; }
-  .masthead h1 { color: #c9a84c; }
-  .section-title { color: #c9a84c; font-family: var(--sans); font-weight: 900;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
-  .ifr-times-title { color: #c9a84c !important; }
-  .freq-pill.active { background: #c9a84c !important; border-color: #c9a84c !important; color: #000 !important; }
-  .add-btn { background: #c9a84c !important; border-color: #c9a84c !important; color: #000 !important; }
-  .add-btn:hover { background: #b8963e !important; }
-  input:focus, select:focus, textarea:focus { border-color: #c9a84c !important; outline: none; }
 </style>
 </head>
 <body>
-<datalist id="lb-airports">
-          <option value="OLBA">OLBA — Beirut–Rafic Hariri International</option>
-          <option value="OMDB">OMDB — Dubai International</option>
-          <option value="HECA">HECA — Cairo International</option>
-          <option value="LTFM">LTFM — Istanbul International</option>
-          <option value="LTFJ">LTFJ — Istanbul Sabiha Gökçen</option>
-          <option value="LFPG">LFPG — Paris Charles de Gaulle</option>
-          <option value="OJAI">OJAI — Amman Queen Alia International</option>
-          <option value="OTHH">OTHH — Doha Hamad International</option>
-          <option value="OERK">OERK — Riyadh King Khalid International</option>
-          <option value="OEJN">OEJN — Jeddah King Abdulaziz International</option>
-          <option value="OEDF">OEDF — Dammam King Fahd International</option>
-          <option value="OKKK">OKKK — Kuwait International</option>
-          <option value="OMAA">OMAA — Abu Dhabi Zayed International</option>
-          <option value="OMSJ">OMSJ — Sharjah International</option>
-          <option value="LGAV">LGAV — Athens International</option>
-          <option value="LCLK">LCLK — Larnaca International</option>
-          <option value="LIRF">LIRF — Rome Fiumicino</option>
-          <option value="EDDF">EDDF — Frankfurt Airport</option>
-          <option value="LSGG">LSGG — Geneva Airport</option>
-          <option value="EGLL">EGLL — London Heathrow</option>
-          <option value="ORBI">ORBI — Baghdad International</option>
-          <option value="ORER">ORER — Erbil International</option>
-          <option value="ORNI">ORNI — Najaf International</option>
-          <option value="UDYZ">UDYZ — Yerevan Zvartnots International</option>
-          <option value="HAAB">HAAB — Addis Ababa Bole International</option>
-          <option value="DAAG">DAAG — Algiers Houari Boumediene</option>
-        </datalist>
 <div class="app">
 
   <!-- MASTHEAD -->
   <div class="masthead">
     <div>
       <h1>SIM Script Builder</h1>
-      <p>Lebanon ATC &nbsp;·&nbsp; SIM Script Builder</p>
+      <p>NZ Airways &nbsp;·&nbsp; Total Control &nbsp;·&nbsp; ATC Training</p>
     </div>
     <div class="masthead-right">
       <button class="btn btn-green"  onclick="saveScript()">💾 Save</button>
       <button class="btn btn-orange" onclick="document.getElementById('fileInput').click()">📂 Load</button>
       <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadScript(event)">
-      <button class="btn btn-purple" onclick="window.open('ATC_Script_Builder_Guide.html','_blank')">📖 Guide</button>
-      <button class="btn" style="background:#2d6a4f;color:#fff" onclick="exportWord()">📝 Export Word</button>
+      <button class="btn btn-purple" onclick="window.open('https://rontbaleilevuka.github.io/atc-script-builder/ATC_Script_Builder_Guide.html','_blank')">📖 Guide</button>
       <span id="saveMsg" class="save-msg" style="display:none"></span>
       <div class="tabs">
         <button class="btn btn-accent active" id="tab-build" onclick="showView('build')">Build</button>
@@ -242,7 +202,7 @@
       <div class="section-body">
         <div class="row-4">
           <div class="field"><span class="field-label">Station</span>
-            <input id="w_station" placeholder="e.g. OLBA" list="lb-airports">
+            <input id="w_station" placeholder="e.g. NZTG">
           </div>
           <div class="field"><span class="field-label">Obs Time</span><input id="w_obstime" placeholder="e.g. 2000"></div>
           <div class="field">
@@ -293,11 +253,12 @@
           <div class="field" id="routeFieldWrap"><span class="field-label">Route / FL / Description &nbsp;<span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0">— press Enter for a new line</span></span><textarea id="f_route" rows="3" placeholder="e.g. TGCH3 TODAN3P GOBUK Trans"></textarea></div>
         </div>
 
-        <!-- ROW 3: Aircraft Type + Transponder + Flight Level -->
+        <!-- ROW 3: Aircraft Type + Transponder -->
         <div id="flightDetailsRow" class="row-3" style="margin-bottom:10px">
           <div class="field">
             <span class="field-label">Aircraft Type</span>
-            <select id="f_actype"></select>
+            <select id="f_actype" onchange="toggleAcTypeOther(this)"></select>
+            <input id="f_actype_other" placeholder="Type aircraft model..." style="display:none;margin-top:6px">
           </div>
           <div class="field">
             <span class="field-label">Transponder</span>
@@ -379,13 +340,22 @@
             <div class="ifr-times-title" style="color:#6a9fd4;display:none"></div>
             <div class="ifr-times-grid">
               <div class="ifr-time-item">
-                <span class="ifr-time-label">Initial Call Time</span>
+                <span class="ifr-time-label">① Initial Call Time</span>
                 <input id="f_vfr_time_initial" placeholder="e.g. 2003" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
                 <input id="f_vfr_sn1" placeholder="sim notes..." style="margin-top:4px;font-size:11px;opacity:0.85;border-color:#cc0000;color:#cc0000">
+              </div>
+              <div class="ifr-time-item">
+                <span class="ifr-time-label">② Request Taxi Time</span>
+                <input id="f_vfr_time_taxi" placeholder="e.g. 2004" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
+                <input id="f_vfr_sn2" placeholder="sim notes..." style="margin-top:4px;font-size:11px;opacity:0.85;border-color:#cc0000;color:#cc0000">
               </div>
             </div>
           </div>
           <div class="row-2" style="margin-bottom:10px">
+          </div>
+          <div class="field" style="margin-bottom:10px">
+            <span class="field-label">Request Taxi Speech &nbsp;<span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0">— leave blank for default</span></span>
+            <textarea id="f_vfr_ready_instr" rows="2" placeholder='"Request Taxi" — leave blank to use default'></textarea>
           </div>
         </div>
 
@@ -397,18 +367,18 @@
           </div>
         </div>
 
-        <!-- INITIAL CALL SPEECH -->
-        <div class="field" style="margin-bottom:10px">
-          <span class="field-label" id="instrLabel">Pilot Speech &nbsp;<span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0">— press Enter for a new line</span></span>
-          <textarea id="f_instructions" rows="3" placeholder='"Request airways to CH, amended level FL180. H1013"'></textarea>
-        </div>
-
         <!-- IFR DEP: taxi speech override -->
         <div id="ifrTaxiInstrRow" style="display:none">
           <div class="field" style="margin-bottom:10px">
             <span class="field-label">Request Taxi Speech (IFR — leave blank for default)</span>
             <textarea id="f_taxi_instr" placeholder='"Request Taxi" — leave blank to use default'></textarea>
           </div>
+        </div>
+
+        <!-- INITIAL CALL SPEECH -->
+        <div class="field" style="margin-bottom:10px">
+          <span class="field-label" id="instrLabel">Pilot Speech &nbsp;<span style="font-size:9px;opacity:0.6;text-transform:none;letter-spacing:0">— press Enter for a new line</span></span>
+          <textarea id="f_instructions" rows="3" placeholder='"Request airways to CH, amended level FL180. H1013"'></textarea>
         </div>
 
         <!-- SIM NOTES -->
@@ -654,6 +624,7 @@ const NZ_AIRPORTS = [
 // ═══════════════════════════════════════════════════════════════════════════════
 const AIRCRAFT_TYPES = [
   '— Select —',
+  '— Other (type below) —',
   'A4K','A19N','A20N','A21N','A109','A124','A139','A306','A310','A319',
   'A320','A321','A332','A333','A339','A342','A343','A345','A346','A359',
   'A388','AB412','AN225','AS50','AS65','AT42','AT75','AT76','ATP','AW139',
@@ -816,13 +787,9 @@ window.onload = function() {
   // Waypoint fields — Origin and Dest are airport dropdowns, middle 3 are free text
   const wpGrid = document.getElementById('wpGrid');
   ['Origin','WP 2','WP 3','WP 4','Dest'].forEach((ph,i) => {
-    const isAirport = i === 0 || i === 4;
     const needsTime = i !== 0; // Origin doesn't need a time
     wpGrid.innerHTML += `<div class="wp-pair">
-      ${isAirport
-        ? `<input class="wp-name" id="wp_label_${i}" placeholder="${ph}" list="lb-airports">`
-        : `<input class="wp-name" id="wp_label_${i}" placeholder="${ph}">`
-      }
+      <input class="wp-name" id="wp_label_${i}" placeholder="${ph}">
       ${needsTime ? `<span class="wp-sep">:</span><input class="wp-time" id="wp_time_${i}" placeholder="time">` : `<input type="hidden" id="wp_time_${i}" value="">`}
     </div>`;
   });
@@ -842,9 +809,6 @@ window.onload = function() {
 
   // Populate station dropdown
 
-  // Populate Origin and Dest waypoint dropdowns (indices 0 and 4)
-  populateAirportSelect(document.getElementById('wp_label_0'), '');
-  populateAirportSelect(document.getElementById('wp_label_4'), '');
 
   // ── KEYBOARD NAVIGATION ───────────────────────────────────────────────────
   // Enter or arrow keys move between fields in the builder.
@@ -869,7 +833,7 @@ function getNavOrder() {
   if (isIFR) {
     base.push('f_time_initial','f_ifr_sn1','f_time_start','f_ifr_sn2','f_time_taxi','f_ifr_sn3');
   } else if (isVFR) {
-    base.push('f_vfr_time_initial','f_vfr_sn1');
+    base.push('f_vfr_time_initial','f_vfr_sn1','f_vfr_time_taxi','f_vfr_sn2');
   } else {
     base.push('f_time','f_freq');
   }
@@ -881,6 +845,7 @@ function getNavOrder() {
   base.push('f_instructions');
 
   if (isIFR) base.push('f_taxi_instr');
+  if (isVFR) base.push('f_vfr_ready_instr');
 
   if (!isSpecial && !isIFR && !isVFR) base.push('f_simnotes');
 
@@ -965,7 +930,8 @@ function updateEntryType() {
   document.getElementById('flightDetailsRow').style.display = isSpecial ? 'none' : 'block';
   document.getElementById('vehicleTypeRow').style.display   = (type === 'ground') ? 'block' : 'none';
   document.getElementById('flightFields').style.display     = isSpecial ? 'none' : 'block';
-  document.getElementById('simNotesField').style.display    = (isIFRDep || isVFRDep) ? 'none' : 'block';
+  document.getElementById('simNotesField').style.display    = (isSpecial || isIFRDep || isVFRDep) ? 'none' : 'block';
+  // Hide route field for ground entries
   const routeWrap = document.getElementById('routeFieldWrap');
   if (routeWrap) routeWrap.style.display = (type === 'ground') ? 'none' : 'block';
 
@@ -1019,9 +985,10 @@ function addEntry() {
   if (editingIndex >= 0) {
     // Single entry — update in place and re-sort
     const freq = document.getElementById('f_freq').value.trim();
-    const time = document.getElementById('f_time').value.trim();
+    const time = document.getElementById('f_time').value.trim()
+               || document.getElementById('f_time_initial').value.trim();
     if (!time) { alert('Please enter a Time.'); return; }
-    entries[editingIndex] = { ...entries[editingIndex], time, simNotes, freq };
+    entries[editingIndex] = { time, callsign, entryType: type, aircraftType, route, waypoints, instructions, simNotes, freq };
     entries.sort((a, b) => (parseInt(a.time)||0) - (parseInt(b.time)||0));
     cancelEdit();
     return;
@@ -1065,10 +1032,16 @@ function addEntry() {
   } else if (isVFRDep) {
     const freq  = document.getElementById('f_freq').value.trim();
     const t1    = document.getElementById('f_vfr_time_initial').value.trim();
-    const sn1   = document.getElementById('f_vfr_sn1').value.trim();
-    if (!t1) { alert('Please enter a Time.'); return; }
+    const t2    = document.getElementById('f_vfr_time_taxi').value.trim();
+    const readySpeech = document.getElementById('f_vfr_ready_instr').value.trim() || '"Ready"';
+    const taxiSpeech  = '"Request Taxi"';
+    const sn1 = document.getElementById('f_vfr_sn1').value.trim();
+    const sn2 = document.getElementById('f_vfr_sn2').value.trim();
+    // Validate at least one time is entered
+    if (!t1 && !t2) { alert('Please enter at least one time.'); return; }
     const base = { callsign, entryType: type, aircraftType, route, waypoints, freq };
-    insertSorted({ ...base, time: t1, instructions, simNotes: sn1 });
+    if (t1) insertSorted({ ...base, time: t1, instructions, simNotes: sn1 });
+    if (t2) insertSorted({ ...base, time: t2, instructions: taxiSpeech, simNotes: sn2 });
 
   } else {
     const freq = document.getElementById('f_freq').value.trim();
@@ -1079,7 +1052,7 @@ function addEntry() {
 
   // Clear form fields
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
-   'f_vfr_time_initial',
+   'f_vfr_time_initial','f_vfr_time_taxi','f_vfr_ready_instr',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
    'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
@@ -1092,7 +1065,9 @@ function addEntry() {
   }
 
   // Reset pushback checkbox
-  const at = document.getElementById('f_actype'); if (at) at.value = '';
+  const at = document.getElementById('f_actype'); if (at) { at.value = ''; }
+  const ato = document.getElementById('f_actype_other'); if (ato) { ato.style.display = 'none'; ato.value = ''; }
+  const vt = document.getElementById('f_vehicle_type'); if (vt) vt.value = '';
   const pb = document.getElementById('f_pushback');
   if (pb) { pb.checked = false; togglePushback(); }
   const sc = document.getElementById('f_same_call');
@@ -1216,10 +1191,29 @@ function editEntry(i) {
   // Common fields — always populated from the clicked entry
   // Populate separate fields from stored entry
   sv('f_callsign', e.callsign);
+  // For ground entries, populate vehicle type
+  const vtSel = document.getElementById('f_vehicle_type');
+  if (vtSel && e.entryType === 'ground') {
+    vtSel.value = e.aircraftType || '';
+  }
   // Split aircraftType back into actype/transponder/flevel
   const acParts = (e.aircraftType || '').split('\n');
   const actypeSel = document.getElementById('f_actype');
-  if (actypeSel) actypeSel.value = acParts[0] || '';
+  const acOther = document.getElementById('f_actype_other');
+  // Check if stored actype exists in dropdown
+  const acInList = AIRCRAFT_TYPES.includes(acParts[0] || '');
+  if (acInList && acParts[0]) {
+    actypeSel.value = acParts[0];
+    acOther.style.display = 'none';
+    acOther.value = '';
+  } else if (acParts[0]) {
+    actypeSel.value = '— Other (type below) —';
+    acOther.style.display = 'block';
+    acOther.value = acParts[0];
+  } else {
+    actypeSel.value = '';
+    acOther.style.display = 'none';
+  }
   sv('f_transponder', acParts[1] || '');
   sv('f_route',        e.route);
   sv('f_instructions', e.instructions);
@@ -1235,21 +1229,45 @@ function editEntry(i) {
     if (tm)  tm.value  = w.time  || '';
   });
 
-  // All entries edit individually — no group editing
-  editingIndex    = i;
+  if (isDepType) {
+    // For dep types — find ALL rows for this callsign and populate all time fields
+      
+    // Find all entries for this callsign
+    const group = entries.filter(x => x.callsign === e.callsign && x.entryType === e.entryType);
 
-  if (e.entryType === 'ifr_dep' || e.entryType === 'vfr_dep') {
-    // For dep rows — switch to standard time row for simple editing
-    document.getElementById('standardTimeRow').style.display = 'block';
-    document.getElementById('ifrTimesRow').style.display     = 'none';
-    document.getElementById('vfrTimesRow').style.display     = 'none';
-    document.getElementById('ifrTaxiInstrRow').style.display = 'none';
-    document.getElementById('simNotesField').style.display   = 'block';
-    sv('f_time', e.time);
-    sv('f_instructions', e.instructions);
-    sv('f_simnotes', e.simNotes);
+    if (e.entryType === 'ifr_dep') {
+      // Map rows by instruction keyword
+      group.forEach(row => {
+        const instr = row.instructions || '';
+        if (instr !== 'Start' && instr !== '"Request Taxi"' && instr !== '"Request Pushback"' && instr !== '"Request Start"') {
+          sv('f_time_initial', row.time); sv('f_ifr_sn1', row.simNotes);
+        } else if (instr === 'Start') {
+          sv('f_time_start', row.time); sv('f_ifr_sn2', row.simNotes);
+        } else if (instr === '"Request Pushback"') {
+          document.getElementById('f_pushback').checked = true; togglePushback();
+          sv('f_time_pushback', row.time); sv('f_ifr_sn_push', row.simNotes);
+        } else if (instr === '"Request Start"') {
+          sv('f_time_start_push', row.time); sv('f_ifr_sn2_push', row.simNotes);
+        } else if (instr.includes('Taxi') || instr === '"Request Taxi"') {
+          sv('f_time_taxi', row.time); sv('f_ifr_sn3', row.simNotes);
+          sv('f_taxi_instr', instr === '"Request Taxi"' ? '' : instr);
+        }
+      });
+    } else if (e.entryType === 'vfr_dep') {
+      group.forEach(row => {
+        const instr = row.instructions || '';
+        if (instr !== '"Request Taxi"' && instr !== '"Ready"') {
+          sv('f_vfr_time_initial', row.time); sv('f_vfr_sn1', row.simNotes);
+          sv('f_instructions', instr);
+        } else if (instr === '"Request Taxi"') {
+          sv('f_vfr_time_taxi', row.time); sv('f_vfr_sn2', row.simNotes);
+        }
+      });
+    }
   } else {
-    sv('f_time', e.time);
+    // Single entry edit
+    editingIndex    = i;
+        sv('f_time_initial', e.time);
   }
 
   // Switch to UPDATE mode
@@ -1308,7 +1326,7 @@ function cancelEdit() {
   document.getElementById('cancelEditBtn').style.display = 'none';
   // Clear form
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
-   'f_vfr_time_initial',
+   'f_vfr_time_initial','f_vfr_time_taxi','f_vfr_ready_instr',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
    'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
@@ -1461,10 +1479,11 @@ function buildScriptHTML() {
 
     if (isSpec) {
       // Special entries: full row coloured
+      const vehicleDisplay = e.entryType === 'ground' && e.aircraftType ? `<br><span style="font-size:8.5pt;font-weight:normal">${e.aircraftType}</span>` : '';
       html += `
       <tr>
         <td style="border:1px solid #999;padding:3px 5px;background:${cssBg};text-align:center !important;vertical-align:middle !important"><b>${e.time}</b></td>
-        <td style="border:1px solid #999;padding:3px 5px;background:${cssBg};text-align:center;vertical-align:middle"><b>${e.callsign}</b>${e.entryType==='ground'&&e.aircraftType?`<br><span style="font-size:8.5pt;font-weight:normal">${e.aircraftType}</span>`:''}</td>
+        <td style="border:1px solid #999;padding:3px 5px;background:${cssBg};text-align:center;vertical-align:middle"><b>${e.callsign}</b>${vehicleDisplay}</td>
         <td style="border:1px solid #999;padding:3px 5px;background:${cssBg}"><b>${col.label}</b></td>
         <td colspan="5" style="border:1px solid #999;border-bottom:2.5px solid #555;padding:3px 5px;background:${cssBg}"><em>${rawInstr}</em></td>
       </tr>`;
@@ -1606,7 +1625,7 @@ function loadScript(event) {
       renderEntries();
       // Re-populate airport dropdowns after loading (they get rebuilt by renderEntries)
       setTimeout(() => {
-          }, 50);
+      }, 50);
       showMsg('Loaded ✓');
       // Go straight to View Script after loading
       showView('view');
@@ -2038,16 +2057,6 @@ function exportPDF() {
     body { margin: 0; padding: 0; }
     @page { margin: 10mm; size: A4 landscape; }
   }
-  /* Desert gold theme */
-  .masthead { border-top: 4px solid #c9a84c; }
-  .masthead h1 { color: #c9a84c; }
-  .section-title { color: #c9a84c; font-family: var(--sans); font-weight: 900;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
-  .ifr-times-title { color: #c9a84c !important; }
-  .freq-pill.active { background: #c9a84c !important; border-color: #c9a84c !important; color: #000 !important; }
-  .add-btn { background: #c9a84c !important; border-color: #c9a84c !important; color: #000 !important; }
-  .add-btn:hover { background: #b8963e !important; }
-  input:focus, select:focus, textarea:focus { border-color: #c9a84c !important; outline: none; }
 </style>
 </head>
 <body>

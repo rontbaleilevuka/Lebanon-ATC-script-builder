@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lebanon ATC Script Builder — Guide</title>
+<title>SIM Script Builder — Guide</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:ital,wght@0,400;0,600;1,400&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -96,9 +96,9 @@
 <div class="app">
 
   <div class="guide-header">
-    <h1>Lebanon ATC Script Builder</h1>
-    <div class="subtitle">Lebanon ATC &nbsp;·&nbsp; SIM Script Builder &nbsp;·&nbsp; User Guide &amp; Troubleshooting</div>
-    <div class="version">Version 1.1 &nbsp;·&nbsp; July 2026</div>
+    <h1>SIM Script Builder</h1>
+    <div class="subtitle">NZ Airways &nbsp;·&nbsp; Total Control &nbsp;·&nbsp; User Guide &amp; Troubleshooting</div>
+    <div class="version">Version 2.4 &nbsp;·&nbsp; July 2026</div>
   </div>
 
   <div class="toc">
@@ -174,7 +174,7 @@
           <div class="step"><span class="step-num">01</span><span class="step-text"><strong>Script Header</strong> — fill in Exercise Title, Date, Exercise Ref and Notes. Notes field: each line becomes a red bullet point in the script.</span></div>
           <div class="step"><span class="step-num">02</span><span class="step-text"><strong>Frequencies</strong> — toggle on the positions you need (TWR, GND, DEL etc.) and type the frequency number. These populate the frequency dropdown on every entry.</span></div>
           <div class="step"><span class="step-num">03</span><span class="step-text"><strong>Weather</strong> — fill in Station (dropdown), Obs Time, ATIS, Approach Type, Runway, Wind, Visibility, Temp/Dew Point, QNH, Cloud, Surface, NOTAM and 2000ft Wind.</span></div>
-          <div class="step"><span class="step-num">04</span><span class="step-text"><strong>New Aircraft Entry</strong> — select Entry Type and Frequency at the top. Fill in Callsign, select Aircraft Type from the dropdown (194 aircraft, or choose "Other" to type any model), enter Transponder, then Route, Times, Waypoints (all free text with airport autocomplete), Pilot Speech and Sim Notes. For Ground Vehicle entries select the Vehicle Type (Crane/Ute/Tug/Fire Truck/Fire Ute) instead.</span></div>
+          <div class="step"><span class="step-num">04</span><span class="step-text"><strong>New Aircraft Entry</strong> — select Entry Type and Frequency at the top. Fill in Callsign, select Aircraft Type from the dropdown (194 aircraft), enter Transponder separately, then Route, Times, Waypoints, Pilot Speech and Sim Notes.</span></div>
           <div class="step"><span class="step-num">05</span><span class="step-text">Click <strong>ADD TO SCRIPT ▶</strong> — entry auto-sorts by time. Repeat for each aircraft.</span></div>
           <div class="step"><span class="step-num">06</span><span class="step-text">Use <strong>↑ ↓</strong> arrows to manually reorder. Click <strong>✏️</strong> to edit an entry. Click <strong>✕</strong> to delete.</span></div>
           <div class="step"><span class="step-num">07</span><span class="step-text">Click <strong>💾 Save</strong> to download the <code>.json</code> file. Upload to the company cloud.</span></div>
@@ -187,7 +187,7 @@
       <div class="card-body">
         <div class="steps">
           <div class="step"><span class="step-num">01</span><span class="step-text">Click the <strong>✏️</strong> button on any entry row in the builder.</span></div>
-          <div class="step"><span class="step-num">02</span><span class="step-text">The form fills with that entry's data. For IFR/VFR departures, <em>all rows</em> for that callsign load together so you can add a missing time or change any call.</span></div>
+          <div class="step"><span class="step-num">02</span><span class="step-text">The form fills with that entry's data. Each row edits individually — changing the Request Taxi time won't affect the Initial Call or Pushback rows.</span></div>
           <div class="step"><span class="step-num">03</span><span class="step-text">Make your changes. The ADD button turns orange and says <strong>UPDATE ENTRY ✔</strong>.</span></div>
           <div class="step"><span class="step-num">04</span><span class="step-text">Click <strong>UPDATE ENTRY ✔</strong> — changes save and the script re-sorts by time automatically.</span></div>
           <div class="step"><span class="step-num">05</span><span class="step-text">Click <strong>✕ Cancel Edit</strong> to discard changes.</span></div>
@@ -380,17 +380,22 @@
         <div class="callout purple"><div class="callout-title">🔍 Section markers</div>Search for these labels to jump to the right place:<br><br>
           <code>SECTION 1 — COLOUR CODES</code> → change entry type colours<br>
           <code>SECTION 2 — ENTRY TYPES</code> → rename entry type labels<br>
-          <code>SECTION 4 — AIRCRAFT LIST</code> → add/remove aircraft types<br>
+          <code>SECTION 3 — AIRPORT LIST</code> → add/remove/rename airports<br>
+          <code>SECTION 4 — DEFAULT WEATHER</code> → change default weather values<br>
           <code>SECTION 9 — FREQUENCY MANAGEMENT</code> → change default frequency positions
         </div>
       </div>
     </div>
 
     <div class="card code">
-      <div class="card-header" onclick="toggle(this)"><span class="card-icon">✈️</span><span class="card-title">Entering airports</span><span class="card-arrow">▼</span></div>
+      <div class="card-header" onclick="toggle(this)"><span class="card-icon">✈️</span><span class="card-title">Adding or changing an airport</span><span class="card-arrow">▼</span></div>
       <div class="card-body">
-        <p>All airport fields in the Lebanon version are <strong>free text</strong> — just type the ICAO code or name directly into the field. There is no dropdown list to edit.</p>
-        <div class="callout green"><div class="callout-title">✅ No code editing needed</div>Station, Origin, Destination and all waypoint fields accept any text you type — no configuration required.</div>
+        <p>Search for <code>SECTION 3 — AIRPORT LIST</code> to find the airport list. Each entry looks like this:</p>
+        <pre>{ code: 'NZTG', name: 'NZTG — Tauranga' },</pre>
+        <p><strong>To add:</strong> copy any line, change the code and name, paste it in the right group.</p>
+        <p><strong>To remove:</strong> delete the whole line.</p>
+        <p><strong>To rename:</strong> change the text after the — inside the name field.</p>
+        <div class="callout yellow"><div class="callout-title">⚠️ Apostrophes in names</div>If the name contains an apostrophe (e.g. Hawke's Bay) you must write it as <code>Hawke\'s Bay</code> with a backslash, otherwise the file will break.</div>
       </div>
     </div>
 
@@ -515,7 +520,7 @@
   <div class="contact-box">
     <h3>Need Further Help?</h3>
     <p>This guide covers all known issues with the SIM Script Builder.<br>For new features or issues contact your sim coordinator.<br><br>
-    <strong style="color:var(--accent)">Lebanon ATC · SIM Script Builder · Version 1.1</strong></p>
+    <strong style="color:var(--accent)">NZ Airways · Total Control · ATC Training · Version 2.4</strong></p>
   </div>
 
 </div>
