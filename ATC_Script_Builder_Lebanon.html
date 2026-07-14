@@ -1301,16 +1301,16 @@ function togglePushback() {
 }
 
 function cancelEdit() {
-  editingIndex    = -1;
+  editingIndex = -1;
   const btn = document.getElementById('addBtn');
   btn.textContent = 'ADD TO SCRIPT ▶';
-  btn.style.background = COLOURS[document.getElementById('f_type').value].bg;
+  btn.style.background = COLOURS[document.getElementById('f_type').value]?.bg || '#333';
   document.getElementById('cancelEditBtn').style.display = 'none';
-  // Clear form
+  // Clear all time and entry fields
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
    'f_vfr_time_initial',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
-   'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
+   'f_vfr_sn1','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   for (let i = 0; i < 5; i++) {
@@ -1319,6 +1319,13 @@ function cancelEdit() {
     if (lbl) lbl.value = '';
     if (tm)  tm.value  = '';
   }
+  const at = document.getElementById('f_actype'); if (at) { at.value = ''; }
+  const ato = document.getElementById('f_actype_other'); if (ato) { ato.style.display = 'none'; ato.value = ''; }
+  const vt = document.getElementById('f_vehicle_type'); if (vt) vt.value = '';
+  const sc = document.getElementById('f_same_call'); if (sc) sc.checked = false;
+  const pb = document.getElementById('f_pushback'); if (pb) { pb.checked = false; togglePushback(); }
+  // Restore correct form state for current entry type
+  updateEntryType();
   renderEntries();
 }
 
