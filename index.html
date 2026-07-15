@@ -417,6 +417,12 @@
           <textarea id="f_simnotes" placeholder="e.g. Aircraft will be used again. Rebuild EOBT 2028. Taxi for 2015 take-off"></textarea>
         </div>
 
+        <!-- GATE/STAND -->
+        <div class="field" style="margin-bottom:10px">
+          <span class="field-label">Gate / Stand</span>
+          <input id="f_gate" placeholder="e.g. Gate 14 / Stand 22B">
+        </div>
+
         <button class="add-btn" id="addBtn" onclick="addEntry()">ADD TO SCRIPT ▶</button>
         <button id="cancelEditBtn" onclick="cancelEdit()" style="display:none;width:100%;margin-top:6px;font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:8px;border:1px solid #ff9800;color:#ff9800;background:transparent;cursor:pointer">✕ Cancel Edit</button>
       </div>
@@ -1014,13 +1020,14 @@ function addEntry() {
   const route        = isSpecial ? '' : document.getElementById('f_route').value.trim();
   const instructions = document.getElementById('f_instructions').value.trim();
   const simNotes     = isSpecial ? '' : document.getElementById('f_simnotes').value.trim();
+  const gate         = document.getElementById('f_gate') ? document.getElementById('f_gate').value.trim() : '';
 
   // ── EDIT MODE ──────────────────────────────────────────────────────────────
   if (editingIndex >= 0) {
     const freq = document.getElementById('f_freq').value.trim();
     const time = document.getElementById('f_time').value.trim();
     if (!time) { alert('Please enter a Time.'); return; }
-    entries[editingIndex] = { ...entries[editingIndex], time, callsign, aircraftType, route, waypoints, instructions, simNotes, freq };
+    entries[editingIndex] = { ...entries[editingIndex], time, callsign, aircraftType, route, waypoints, instructions, simNotes, freq, gate };
     entries.sort((a, b) => (parseInt(a.time)||0) - (parseInt(b.time)||0));
     cancelEdit();
     return;
@@ -1039,7 +1046,7 @@ function addEntry() {
     const base = { callsign, entryType: type, aircraftType, route, waypoints, freq };
     // Validate at least one time is entered
     if (!t1 && !t3) { alert('Please enter at least one time.'); return; }
-    if (t1) insertSorted({ ...base, time: t1, instructions, simNotes: sn1 });
+    if (t1) insertSorted({ ...base, time: t1, instructions, simNotes: sn1, gate });
 
     if (hasPush) {
       const sameCall = document.getElementById('f_same_call').checked;
@@ -1051,15 +1058,15 @@ function addEntry() {
       } else {
         const ts  = document.getElementById('f_time_start_push').value.trim();
         const sns = document.getElementById('f_ifr_sn2_push').value.trim();
-        if (tp) insertSorted({ ...base, time: tp, instructions: '"Request Pushback"', simNotes: snp });
-        if (ts) insertSorted({ ...base, time: ts, instructions: '"Request Start"',    simNotes: sns });
+        if (tp) insertSorted({ ...base, time: tp, instructions: '"Request Pushback"', simNotes: snp, gate });
+        if (ts) insertSorted({ ...base, time: ts, instructions: '"Request Start"',    simNotes: sns, gate });
       }
     } else {
       const t2  = document.getElementById('f_time_start').value.trim();
       const sn2 = document.getElementById('f_ifr_sn2').value.trim();
-      if (t2) insertSorted({ ...base, time: t2, instructions: 'Start', simNotes: sn2 });
+      if (t2) insertSorted({ ...base, time: t2, instructions: 'Start', simNotes: sn2, gate });
     }
-    if (t3) insertSorted({ ...base, time: t3, instructions: taxiSpeech, simNotes: sn3 });
+    if (t3) insertSorted({ ...base, time: t3, instructions: taxiSpeech, simNotes: sn3, gate });
 
   } else if (isVFRDep) {
     const freq  = document.getElementById('f_freq').value.trim();
@@ -1067,7 +1074,7 @@ function addEntry() {
     const sn1   = document.getElementById('f_vfr_sn1').value.trim();
     if (!t1) { alert('Please enter a Time.'); return; }
     const base = { callsign, entryType: type, aircraftType, route, waypoints, freq };
-    insertSorted({ ...base, time: t1, instructions, simNotes: sn1 });
+    insertSorted({ ...base, time: t1, instructions, simNotes: sn1, gate });
 
   } else {
     const freq = document.getElementById('f_freq').value.trim();
@@ -1080,7 +1087,7 @@ function addEntry() {
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
    'f_vfr_time_initial',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
-   'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
+   'f_vfr_sn1','f_vfr_sn2','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes','f_gate'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   for (let i = 0; i < 5; i++) {
@@ -1235,6 +1242,7 @@ function editEntry(i) {
   sv('f_instructions', e.instructions);
   sv('f_simnotes',     e.simNotes);
   sv('f_freq', e.freq);
+  sv('f_gate', e.gate);
   sv('f_time',         e.time);
 
   // Waypoints
@@ -1322,7 +1330,7 @@ function cancelEdit() {
   ['f_time','f_time_initial','f_time_start','f_time_taxi',
    'f_vfr_time_initial',
    'f_ifr_sn1','f_ifr_sn2','f_ifr_sn3','f_time_pushback','f_time_start_push','f_ifr_sn_push','f_ifr_sn2_push',
-   'f_vfr_sn1','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes'].forEach(id => {
+   'f_vfr_sn1','f_callsign','f_route','f_transponder','f_instructions','f_taxi_instr','f_simnotes','f_gate'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   for (let i = 0; i < 5; i++) {
@@ -1518,7 +1526,10 @@ function buildScriptHTML() {
               <div>${speech}</div>
               ${e.simNotes ? `<div><i style="color:#cc0000">${e.simNotes}</i></div>` : ''}
             </div>
-            <div style="white-space:nowrap;align-self:flex-end;font-weight:bold;font-style:italic;font-size:9pt">${e.freq || ''}</div>
+            <div style="white-space:nowrap;align-self:flex-end;font-weight:bold;font-style:italic;font-size:9pt;text-align:right">
+              ${e.freq ? `<div>${e.freq}</div>` : ''}
+              ${e.gate ? `<div style="font-size:8.5pt;margin-top:2px;color:#8B0000">${e.gate}</div>` : ''}
+            </div>
           </div>
         </td>
       </tr>`;
