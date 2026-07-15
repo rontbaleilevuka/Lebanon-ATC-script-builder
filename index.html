@@ -1255,6 +1255,8 @@ function editEntry(i) {
     document.getElementById('vfrTimesRow').style.display     = 'none';
     document.getElementById('ifrTaxiInstrRow').style.display = 'none';
     document.getElementById('simNotesField').style.display   = 'block';
+    // Show aircraft/transponder fields so they can be edited
+    document.getElementById('flightDetailsRow').style.display = 'block';
     sv('f_time', e.time);
     sv('f_instructions', e.instructions);
     sv('f_simnotes', e.simNotes);
