@@ -1017,11 +1017,10 @@ function addEntry() {
 
   // ── EDIT MODE ──────────────────────────────────────────────────────────────
   if (editingIndex >= 0) {
-    // Single entry — update in place and re-sort
     const freq = document.getElementById('f_freq').value.trim();
     const time = document.getElementById('f_time').value.trim();
     if (!time) { alert('Please enter a Time.'); return; }
-    entries[editingIndex] = { ...entries[editingIndex], time, instructions, simNotes, freq };
+    entries[editingIndex] = { ...entries[editingIndex], time, callsign, aircraftType, route, waypoints, instructions, simNotes, freq };
     entries.sort((a, b) => (parseInt(a.time)||0) - (parseInt(b.time)||0));
     cancelEdit();
     return;
@@ -1216,11 +1215,22 @@ function editEntry(i) {
   // Common fields — always populated from the clicked entry
   // Populate separate fields from stored entry
   sv('f_callsign', e.callsign);
-  // Split aircraftType back into actype/transponder/flevel
+  // Split aircraftType back into actype + transponder
   const acParts = (e.aircraftType || '').split('\n');
   const actypeSel = document.getElementById('f_actype');
-  if (actypeSel) actypeSel.value = acParts[0] || '';
+  const acOther   = document.getElementById('f_actype_other');
+  const acInList  = AIRCRAFT_TYPES.includes(acParts[0] || '');
+  if (acInList && acParts[0]) {
+    if (actypeSel) actypeSel.value = acParts[0];
+    if (acOther) { acOther.style.display = 'none'; acOther.value = ''; }
+  } else if (acParts[0]) {
+    if (actypeSel) actypeSel.value = '— Other (type below) —';
+    if (acOther) { acOther.style.display = 'block'; acOther.value = acParts[0]; }
+  }
   sv('f_transponder', acParts[1] || '');
+  // Vehicle type for ground entries
+  const vtSel = document.getElementById('f_vehicle_type');
+  if (vtSel && e.entryType === 'ground') vtSel.value = e.aircraftType || '';
   sv('f_route',        e.route);
   sv('f_instructions', e.instructions);
   sv('f_simnotes',     e.simNotes);
