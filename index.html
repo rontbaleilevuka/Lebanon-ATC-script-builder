@@ -1967,6 +1967,14 @@ function exportWord() {
         }));
       }
 
+      // Para 4: gate/stand below frequency in dark red
+      if (e.gate) {
+        instrParas.push(new Paragraph({
+          alignment: AlignmentType.RIGHT,
+          children: [new TextRun({ text: e.gate, size: 17, bold: true, color: '8B0000', font: 'Arial' })]
+        }));
+      }
+
       scriptRows.push(new TableRow({
         children: [
           new TableCell({
